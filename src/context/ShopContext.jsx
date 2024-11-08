@@ -14,6 +14,7 @@ const ShopContextProvider = (props) => {
   };
 
   return (
+    // eslint-disable-next-line react/prop-types
     <ShopContext.Provider value={value}>{props.children}</ShopContext.Provider>
   );
 };
