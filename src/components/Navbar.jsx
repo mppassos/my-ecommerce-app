@@ -1,6 +1,5 @@
 import { assets } from "../assets";
 import { Link, NavLink } from "react-router-dom";
-import { Search, UserRound, ShoppingBag, Menu, ArrowRight } from "lucide-react";
 import { useState } from "react";
 
 const Navbar = () => {
@@ -32,10 +31,14 @@ const Navbar = () => {
       </ul>
 
       <div className="flex items-center gap-6">
-        <Search />
+        <img src={assets.search_icon} className="w-5 cursor-pointer" alt="" />
 
-        <div className="relative group">
-          <UserRound />
+        <div className="group relative">
+          <img
+            src={assets.profile_icon}
+            className="w-5 cursor-pointer"
+            alt=""
+          />
           <div className="absolute right-0 pt-4 hidden group-hover:block">
             <div className="flex flex-col gap-2 w-36 py-3 px-5 bg-slate-100 text-gray-500 rounded">
               <p className="cursor-pointer hover:text-black">My Profile</p>
@@ -45,14 +48,16 @@ const Navbar = () => {
           </div>
         </div>
         <Link to="/cart" className="relative">
-          <ShoppingBag />
+          <img src={assets.cart_icon} className="w-5 min-w-5" alt="" />
           <p className="absolute right-[-px] bottom-[-5px] w-4 text-center leading-4 bg-black text-white aspect-square rounded-full text-[8px]">
             10
           </p>
         </Link>
-        <Menu
+        <img
           onClick={() => setVisible(true)}
+          src={assets.menu_icon}
           className="w-5 cursor-pointer sm:hidden"
+          alt=""
         />
       </div>
 
@@ -67,7 +72,7 @@ const Navbar = () => {
             onClick={() => setVisible(false)}
             className="flex items-center gap-4 p-3 cursor-pointer"
           >
-            <ArrowRight className="h-4 rotate-180" />
+            <img className="h-4 rotate-180" src={assets.dropdown_icon} alt="" />
             <p>Back</p>
           </div>
           <NavLink
