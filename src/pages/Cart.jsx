@@ -3,12 +3,25 @@ import { ShopContext } from "../context/ShopContext";
 import Title from "../components/Title";
 import { assets } from "../assets";
 import CartTotal from "../components/CartTotal";
+import { useLanguage } from "../context/LanguageContext";
 
 const Cart = () => {
   const { products, currency, cartItems, updateQuantity, navigate } =
     useContext(ShopContext);
+  const { language } = useLanguage();
 
   const [cartData, setCartData] = useState([]);
+
+  const translations = {
+    en: {
+      yourCart: "YOUR CART",
+      proceedToCheckout: "PROCEED TO CHECKOUT",
+    },
+    pt: {
+      yourCart: "SEU CARRINHO",
+      proceedToCheckout: "PROSSEGUIR PARA O PAGAMENTO",
+    },
+  };
 
   useEffect(() => {
     const tempData = [];
@@ -29,7 +42,7 @@ const Cart = () => {
   return (
     <div className="border-t pt-14">
       <div className="text-2xl mb-3">
-        <Title text1={"YOUR"} text2={"CART"} />
+        <Title text1={translations[language].yourCart} />
       </div>
 
       <div>
@@ -98,7 +111,7 @@ const Cart = () => {
               onClick={() => navigate("/place-order")}
               className="bg-black text-white text-sm my-8 px-8 py-3"
             >
-              PROCEED TO CHECKOUT
+              {translations[language].proceedToCheckout}{" "}
             </button>
           </div>
         </div>

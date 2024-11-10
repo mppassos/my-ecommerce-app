@@ -2,11 +2,40 @@ import { assets } from "../assets";
 import { Link, NavLink } from "react-router-dom";
 import { useContext, useState } from "react";
 import { ShopContext } from "../context/ShopContext";
+import { useLanguage } from "../context/LanguageContext";
 
 const Navbar = () => {
   const [visible, setVisible] = useState(false);
-
   const { setShowSearch, getCartCount } = useContext(ShopContext);
+  const { language, toggleLanguage } = useLanguage(); // Obtém o idioma atual e a função para alternar
+
+  // Traduções
+  const translations = {
+    en: {
+      home: "HOME",
+      collection: "COLLECTION",
+      about: "ABOUT",
+      contact: "CONTACT",
+      myProfile: "My Profile",
+      orders: "Orders",
+      logout: "Logout",
+      back: "Back",
+      switchToPT: "Switch to Portuguese",
+      switchToEN: "Switch to English",
+    },
+    pt: {
+      home: "INÍCIO",
+      collection: "COLEÇÃO",
+      about: "SOBRE",
+      contact: "CONTATO",
+      myProfile: "Meu Perfil",
+      orders: "Pedidos",
+      logout: "Sair",
+      back: "Voltar",
+      switchToPT: "Mudar para Português",
+      switchToEN: "Mudar para Inglês",
+    },
+  };
 
   return (
     <div className="flex items-center justify-between py-5 font-medium">
@@ -16,19 +45,19 @@ const Navbar = () => {
 
       <ul className="hidden sm:flex gap-5 text-sm text-gray">
         <NavLink to="/" className="flex flex-col items-center gap-1">
-          <p>HOME</p>
+          <p>{translations[language].home}</p>
           <hr className="w-2/4 border-none h-[1.5px] bg-gray-700 hidden" />
         </NavLink>
         <NavLink to="/collection" className="flex flex-col items-center gap-1">
-          <p>COLLECTION</p>
+          <p>{translations[language].collection}</p>
           <hr className="w-2/4 border-none h-[1.5px] bg-gray-700 hidden" />
         </NavLink>
         <NavLink to="/about" className="flex flex-col items-center gap-1">
-          <p>ABOUT</p>
+          <p>{translations[language].about}</p>
           <hr className="w-2/4 border-none h-[1.5px] bg-gray-700 hidden" />
         </NavLink>
         <NavLink to="/contact" className="flex flex-col items-center gap-1">
-          <p>CONTACT</p>
+          <p>{translations[language].contact}</p>
           <hr className="w-2/4 border-none h-[1.5px] bg-gray-700 hidden" />
         </NavLink>
       </ul>
@@ -51,9 +80,15 @@ const Navbar = () => {
           </Link>
           <div className="absolute right-0 pt-4 hidden group-hover:block">
             <div className="flex flex-col gap-2 w-36 py-3 px-5 bg-slate-100 text-gray-500 rounded">
-              <p className="cursor-pointer hover:text-black">My Profile</p>
-              <p className="cursor-pointer hover:text-black">Orders</p>
-              <p className="cursor-pointer hover:text-black">Logout</p>
+              <p className="cursor-pointer hover:text-black">
+                {translations[language].myProfile}
+              </p>
+              <p className="cursor-pointer hover:text-black">
+                {translations[language].orders}
+              </p>
+              <p className="cursor-pointer hover:text-black">
+                {translations[language].logout}
+              </p>
             </div>
           </div>
         </div>
@@ -69,6 +104,16 @@ const Navbar = () => {
           className="w-5 cursor-pointer sm:hidden"
           alt=""
         />
+
+        {/* Botão para alternar o idioma */}
+        <button
+          onClick={toggleLanguage}
+          className="text-sm text-gray-600 hover:text-black"
+        >
+          {language === "en"
+            ? translations.pt.switchToPT
+            : translations.en.switchToEN}
+        </button>
       </div>
 
       {/* Sidebar menu for small screens */}
@@ -83,35 +128,35 @@ const Navbar = () => {
             className="flex items-center gap-4 p-3 cursor-pointer"
           >
             <img className="h-4 rotate-180" src={assets.dropdown_icon} alt="" />
-            <p>Back</p>
+            <p>{translations[language].back}</p>
           </div>
           <NavLink
             onClick={() => setVisible(false)}
             className="py-2 pl-6 border"
             to="/"
           >
-            HOME
+            {translations[language].home}
           </NavLink>
           <NavLink
             onClick={() => setVisible(false)}
             className="py-2 pl-6 border"
             to="/collection"
           >
-            COLLECTION
+            {translations[language].collection}
           </NavLink>
           <NavLink
             onClick={() => setVisible(false)}
             className="py-2 pl-6 border"
             to="/about"
           >
-            ABOUT
+            {translations[language].about}
           </NavLink>
           <NavLink
             onClick={() => setVisible(false)}
             className="py-2 pl-6 border"
             to="/contact"
           >
-            CONTACT
+            {translations[language].contact}
           </NavLink>
         </div>
       </div>

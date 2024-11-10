@@ -3,6 +3,7 @@ import { assets } from "../assets/assets";
 import Title from "../components/Title";
 import ProductItem from "../components/ProductItem";
 import { ShopContext } from "../context/ShopContext";
+import { useLanguage } from "../context/LanguageContext";
 
 const Collection = () => {
   const { products, search, showSearch } = useContext(ShopContext);
@@ -11,6 +12,42 @@ const Collection = () => {
   const [category, setCategory] = useState([]);
   const [subCategory, setSubCategory] = useState([]);
   const [sortType, setSortType] = useState("relevant");
+  const { language } = useLanguage();
+
+  const translations = {
+    en: {
+      filters: "FILTERS",
+      categories: "CATEGORIES",
+      types: "TYPES",
+      all: "ALL",
+      collections: "COLLECTIONS",
+      sortByRelevant: "Sort by: Relevant",
+      sortByLowHigh: "Sort by: Low to High",
+      sortByHighLow: "Sort by: High to Low",
+      men: "Men",
+      women: "Women",
+      kids: "Kids",
+      topwear: "Topwear",
+      bottomwear: "Bottomwear",
+      winterwear: "Winterwear",
+    },
+    pt: {
+      filters: "FILTROS",
+      categories: "CATEGORIAS",
+      types: "TIPOS",
+      all: "TODAS",
+      collections: "COLEÇÕES",
+      sortByRelevant: "Ordenar por: Relevante",
+      sortByLowHigh: "Ordenar por: Baixo para Alto",
+      sortByHighLow: "Ordenar por: Alto para Baixo",
+      men: "Homens",
+      women: "Mulheres",
+      kids: "Crianças",
+      topwear: "Roupas de Cima",
+      bottomwear: "Roupas de Baixo",
+      winterwear: "Roupas de Inverno",
+    },
+  };
 
   const toggleCategory = (e) => {
     if (category.includes(e.target.value)) {
@@ -86,9 +123,9 @@ const Collection = () => {
           onClick={() => setShowFilter(!showFilter)}
           className="my-2 text-xl flex items-center cursor-pointer gap-2"
         >
-          FILTERS
+          {translations[language].filters}
           <img
-            className={`h-3 sm:hidden ${showFilter} ? 'rotate-90 : ''}`}
+            className={`h-3 sm:hidden ${showFilter ? "rotate-90" : ""}`}
             src={assets.dropdown_icon}
             alt=""
           />
@@ -99,7 +136,9 @@ const Collection = () => {
             showFilter ? "" : "hidden"
           } sm:block`}
         >
-          <p className="mb-3 text-sm font-medium">CATEGORIES</p>
+          <p className="mb-3 text-sm font-medium">
+            {translations[language].categories}
+          </p>
           <div className="flex flex-col gap-2 text-sm font-light text-gray-700">
             <p className="flex gap-2">
               <input
@@ -108,7 +147,7 @@ const Collection = () => {
                 value={"Men"}
                 onChange={toggleCategory}
               />{" "}
-              Men
+              {translations[language].men}
             </p>
             <p className="flex gap-2">
               <input
@@ -117,7 +156,7 @@ const Collection = () => {
                 value={"Women"}
                 onChange={toggleCategory}
               />{" "}
-              Women
+              {translations[language].women}
             </p>
             <p className="flex gap-2">
               <input
@@ -126,7 +165,7 @@ const Collection = () => {
                 value={"Kids"}
                 onChange={toggleCategory}
               />{" "}
-              kids
+              {translations[language].kids}
             </p>
           </div>
         </div>
@@ -136,7 +175,9 @@ const Collection = () => {
             showFilter ? "" : "hidden"
           } sm:block`}
         >
-          <p className="mb-3 text-sm font-medium">TYPES</p>
+          <p className="mb-3 text-sm font-medium">
+            {translations[language].types}
+          </p>
           <div className="flex flex-col gap-2 text-sm font-light text-gray-700">
             <p className="flex gap-2">
               <input
@@ -145,7 +186,7 @@ const Collection = () => {
                 value={"Topwear"}
                 onClick={toggleSubCategory}
               />
-              Topwear
+              {translations[language].topwear}
             </p>
             <p className="flex gap-2">
               <input
@@ -154,7 +195,7 @@ const Collection = () => {
                 value={"Bottomwear"}
                 onClick={toggleSubCategory}
               />
-              Bottomwear
+              {translations[language].bottomwear}
             </p>
             <p className="flex gap-2">
               <input
@@ -163,7 +204,7 @@ const Collection = () => {
                 value={"Winterwear"}
                 onClick={toggleSubCategory}
               />
-              Winterwear
+              {translations[language].winterwear}
             </p>
           </div>
         </div>
@@ -172,15 +213,24 @@ const Collection = () => {
       {/* Right Side */}
       <div className="flex-1">
         <div className="flex justify-between text-base sm:text-2xl mb-4">
-          <Title text1={"ALL"} text2={"COLLECTIONS"} />
-          {/*Product Sort*/}
+          <Title
+            text1={translations[language].all}
+            text2={translations[language].collections}
+          />
+          {/* Product Sort */}
           <select
             onChange={(e) => setSortType(e.target.value)}
             className="border-2 border-gray-300 text-sm px-2"
           >
-            <option value="relevant">Sort by: Relevant</option>
-            <option value="low-high">Sort by: Low to High</option>
-            <option value="high-low">Sort by: High to Low</option>
+            <option value="relevant">
+              {translations[language].sortByRelevant}
+            </option>
+            <option value="low-high">
+              {translations[language].sortByLowHigh}
+            </option>
+            <option value="high-low">
+              {translations[language].sortByHighLow}
+            </option>
           </select>
         </div>
 

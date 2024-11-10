@@ -1,12 +1,43 @@
 import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { ShopContext } from "../context/ShopContext";
+import { LanguageContext } from "../context/LanguageContext";
 import { assets } from "../assets/assets";
 import RelatedProducts from "../components/RelatedProducts";
+
+const translations = {
+  en: {
+    selectSize: "Select Size",
+    addToCart: "ADD TO CART",
+    originalProduct: "100% Original product.",
+    cashOnDelivery: "Cash on delivery is available on this product.",
+    returnPolicy: "Easy return and exchange policy within 7 days.",
+    description: "Description",
+    reviews: "Reviews (122)",
+    eCommerceDescription:
+      "An e-commerce website is an online platform that facilitates the buying and selling of products or services over the internet. It serves as a virtual marketplace where business and individuals can showcase their products, interact with customers, and conduct transactions without the need for a physical presence. E-commerce websites have gained immense popularity due to their convenience, accessibility, and the global reach they offer.",
+    eCommerceDetails:
+      "E-commerce websites typically display products or services along with detailed descriptions, images, prices, and any available variations (e.g., sizes, colors). Each product usually has its own dedicated page with relevant information.",
+  },
+  pt: {
+    selectSize: "Selecionar Tamanho",
+    addToCart: "ADICIONAR AO CARRINHO",
+    originalProduct: "Produto 100% Original.",
+    cashOnDelivery: "Pagamento na entrega disponível para este produto.",
+    returnPolicy: "Política de devolução e troca fácil dentro de 7 dias.",
+    description: "Descrição",
+    reviews: "Avaliações (122)",
+    eCommerceDescription:
+      "Um site de e-commerce é uma plataforma online que facilita a compra e venda de produtos ou serviços pela internet. Ele serve como um mercado virtual onde empresas e indivíduos podem exibir seus produtos, interagir com os clientes e realizar transações sem a necessidade de uma presença física. Os sites de e-commerce ganharam imensa popularidade devido à sua conveniência, acessibilidade e ao alcance global que oferecem.",
+    eCommerceDetails:
+      "Os sites de e-commerce normalmente exibem produtos ou serviços junto com descrições detalhadas, imagens, preços e quaisquer variações disponíveis (por exemplo, tamanhos, cores). Cada produto geralmente tem sua própria página dedicada com informações relevantes.",
+  },
+};
 
 const Product = () => {
   const { productId } = useParams();
   const { products, currency, addToCart } = useContext(ShopContext);
+  const { language } = useContext(LanguageContext); // Usando o contexto de idioma
   const [productData, setProductData] = useState(null);
   const [image, setImage] = useState("");
   const [size, setSize] = useState("");
@@ -66,7 +97,7 @@ const Product = () => {
             {productData.description}
           </p>
           <div className="flex flex-col gap-4 my-8">
-            <p>Select Size</p>
+            <p>{translations[language].selectSize}</p>
             <div className="flex gap-2">
               {productData.sizes.map((item, index) => (
                 <button
@@ -85,13 +116,13 @@ const Product = () => {
             onClick={() => addToCart(productData._id, size)}
             className="bg-black text-white px-8 py-3 text-sm active:bg-gray-700"
           >
-            ADD TO CART
+            {translations[language].addToCart}
           </button>
           <hr className="mt-8 sm:w-4/5" />
           <div className="text-sm text-gray-500 mt-5 flex flex-col gap-1">
-            <p>100% Original product.</p>
-            <p>Cash on delivery is available on this product.</p>
-            <p>Easy return and exchange policy within 7 days.</p>
+            <p>{translations[language].originalProduct}</p>
+            <p>{translations[language].cashOnDelivery}</p>
+            <p>{translations[language].returnPolicy}</p>
           </div>
         </div>
       </div>
@@ -99,25 +130,16 @@ const Product = () => {
       {/* --------- Description & Review Section --------- */}
       <div className="mt-20">
         <div className="flex">
-          <b className="border px-5 py-3 text-sm">Description</b>
-          <p className="border px-5 py-3 text-sm">Reviews (122)</p>
+          <b className="border px-5 py-3 text-sm">
+            {translations[language].description}
+          </b>
+          <p className="border px-5 py-3 text-sm">
+            {translations[language].reviews}
+          </p>
         </div>
         <div className="flex flex-col gap-4 border px-6 py-6 text-sm text-gray-500">
-          <p>
-            An e-commerce website is an online platform that facilitates the
-            buying and selling of products or services over the internet. It
-            serves as a virtual marketplace where business and individuals can
-            showcase their products, interact with customers, and conduct
-            transactions without the need for a physical presence.E-commerce
-            websites have gained immense popularity due to their
-            convenience,accessibility,and the global reach they offer.
-          </p>
-          <p>
-            E-commerce websites typically display products or services along
-            with detailed descriptions,images,prices, and any available
-            variations(e.g.,sizes,colors).Each product usually has its own
-            dedicated page with relevant information.
-          </p>
+          <p>{translations[language].eCommerceDescription}</p>
+          <p>{translations[language].eCommerceDetails}</p>
         </div>
       </div>
 

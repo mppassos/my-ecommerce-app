@@ -1,14 +1,48 @@
 import { useContext } from "react";
 import { ShopContext } from "../context/ShopContext";
 import Title from "../components/Title";
+import { useLanguage } from "../context/LanguageContext";
+
+const translations = {
+  en: {
+    my: "MY",
+    orders: "ORDERS",
+    quantity: "Quantity: ",
+    size: "Size: ",
+    date: "Date: ",
+    readyToShip: "Ready to ship",
+    trackOrder: "Track Order",
+  },
+  pt: {
+    my: "MINHAS",
+    orders: "PEDIDOS",
+    quantity: "Quantidade: ",
+    size: "Tamanho: ",
+    date: "Data: ",
+    readyToShip: "Pronto para enviar",
+    trackOrder: "Rastrear Pedido",
+  },
+};
 
 const Orders = () => {
   const { products, currency } = useContext(ShopContext);
+  const { language } = useLanguage();
+
+  const getCurrentDate = () => {
+    const options = { day: "numeric", month: "short", year: "numeric" };
+    return new Date().toLocaleDateString(
+      language === "pt" ? "pt-BR" : "en-US",
+      options
+    );
+  };
 
   return (
     <div className="border-t pt-16">
       <div className="text-2xl">
-        <Title text1={"MY"} text2={"ORDERS"} />
+        <Title
+          text1={translations[language].my}
+          text2={translations[language].orders}
+        />
       </div>
 
       <div>
@@ -26,21 +60,24 @@ const Orders = () => {
                     {currency}
                     {item.price}
                   </p>
-                  <p>Quantity: 1</p>
-                  <p>Size: M</p>
+                  <p>{translations[language].quantity}1</p>
+                  <p>{translations[language].size} M</p>
                 </div>
                 <p className="mt-2">
-                  Date: <span className="text-gray-400">10, Nov, 2024</span>
+                  {translations[language].date}{" "}
+                  <span className="text-gray-400">{getCurrentDate()}</span>
                 </p>
               </div>
             </div>
             <div className="md:w-1/2 flex justify-between">
               <div className="flex items-center gap-2">
                 <p className="min-w-2 h-2 rounded-full bg-green-500"></p>
-                <p className="text-sm md:text-base">Ready to ship</p>
+                <p className="text-sm md:text-base">
+                  {translations[language].readyToShip}
+                </p>
               </div>
               <button className="border px-4 py-2 text-sm font-medium rounded-sm">
-                Track Order
+                {translations[language].trackOrder}
               </button>
             </div>
           </div>
